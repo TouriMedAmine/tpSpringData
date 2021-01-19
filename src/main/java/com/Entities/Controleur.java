@@ -24,6 +24,23 @@ public class Controleur {
 		V.save(n);
 		return "Ajout à la BD avec succes ";
 	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	public @ResponseBody Vehicule trouverParID (@PathVariable Integer id) {
+		Vehicule n = new Vehicule();
+		Optional<Vehicule> v = V.findById(id);
+		if(v.isPresent()) {
+			n = v.get();
+		}
+		return n;
+	}
+	
+	@RequestMapping(path="/supprimer/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody String SupprimerVoiture (@PathVariable Integer id) {
+		
+		V.deleteById(id);
+		return "Suppression de la BD avec succes ";
+	}
 
 	@GetMapping(path="/tous")
 	public @ResponseBody Iterable<Vehicule> affichertous() {
